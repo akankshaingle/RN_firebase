@@ -3,7 +3,6 @@ import { View, Text, TextInput, StyleSheet, ImageBackground, Image, TouchableOpa
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import * as Facebook from 'expo-facebook';
-import apiKeys from '../config/Keys'
 // import * as firebase from 'firebase';
 
 const initialState = { Email: '', Password: '' };
@@ -16,22 +15,19 @@ const reducer = (state, action) => {
             return { ...state, Password: action.value }
         default:
             return state;
-
     }
 }
 
 export function SignInscreen({ navigation }) {
-
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    // const loginWithFacebook = () => {
     async function loginWithFacebook() {
         try {
             await Facebook.initializeAsync({
                 appId: '7739544266071562',
             });
 
-            const { type, token, expirationDate, permissions, declinedPermissions } =
+            const { type, token } =
                 await Facebook.logInWithReadPermissionsAsync({
                     permissions: ['public_profile'],
                 });
@@ -40,7 +36,6 @@ export function SignInscreen({ navigation }) {
                 const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
                 navigation.navigate('Home')
             } else {
-                // type === 'cancel'
             }
         } catch ({ message }) {
             alert(`Facebook Login Error: ${message}`);
@@ -101,35 +96,32 @@ export function SignInscreen({ navigation }) {
                 onPress={() => loginWithFacebook()} style={styles.loginBtn}>
                 <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>Login With Facebook</Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 onPress={() => signUpUser(state.Email, state.Password)} style={styles.loginBtn}>
                 <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>SIGN UP</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
+            </TouchableOpacity> */}
+            {/* <TouchableOpacity
                 // onPress={() => {
-                // if (!state.Email) {
-                //   Alert.alert('Email is required');
-                // }
-                // else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(state.Email)) {
-                //   Alert.alert("Invalid email address");
-                // }
-                // else if (!state.Password) {
-                //   Alert.alert('Password is Required');
-                // }
-                // else {
-                //   // navigation.navigate('Register')
-                //   () => { loginUser(state.Email, state.Password) }
-                // }
-                // console.warn(state);
+                //     if (!state.Email) {
+                //         Alert.alert('Email is required');
+                //     }
+                //     else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(state.Email)) {
+                //         Alert.alert("Invalid email address");
+                //     }
+                //     else if (!state.Password) {
+                //         Alert.alert('Password is Required');
+                //     }
+                //     else {
+                //         // navigation.navigate('Register')
+                //         () => { loginUser(state.Email, state.Password) }
+                //     }
+                //     console.warn(state);
                 // }
                 // }
                 // style={styles.loginBtn}
-                onPress={() => loginUser(state.Email, state.Password)} style={styles.loginBtn}
-            >
+                onPress={() => loginUser(state.Email, state.Password)} style={styles.loginBtn}>
                 <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>SIGN IN</Text>
-            </TouchableOpacity>
-
-
+            </TouchableOpacity> */}
         </View>
     )
 }
@@ -182,15 +174,3 @@ const styles = StyleSheet.create({
 
 });
 export default SignInscreen
-// import { View, Text } from 'react-native'
-// import React from 'react'
-
-// const SignInscreen = () => {
-//     return (
-//         <View>
-//             <Text>SignInscreen</Text>
-//         </View>
-//     )
-// }
-
-// export default SignInscreen
