@@ -10,3 +10,19 @@ export default {
         measurementId: "G-2606V7BZR4",
     }
 }
+
+// firebase.auth().onAuthStateChanged((user) => {
+//     console.warn(user.uid);
+//   })
+//   const onReady = async () => {
+//     firebase.auth().onAuthStateChanged((user) => {
+//       console.warn(user.uid);
+//       var id = user.uid;
+//       if (id) {
+//         navigationRef.reset({
+//           index: 0,
+//           routes: [{ name: 'Home' }],
+//         });
+//       }
+//     })
+//   }

@@ -9,20 +9,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const HomeScreen = () => {
     const [press, setPress] = useState(false)
     const [data, setdata] = useState('')
-    // console.log(data);
+    // firebase.auth().onAuthStateChanged((user) => {
+    //     console.warn(user.uid);
+    // })
     const getData = () => {
         firebase.database().ref(`UserList/`).on('value', snapshot => {
             var responselist = Object.values(snapshot.val())
-            // console.log(snapshot.val())
             setdata(responselist)
             setPress(true)
-            // console.log(responselist)
         });
     }
-    // useEffect(() => { 
-    //     getData();
-    // });
-    // console.log(data);
     return (
         <View style={{ flex: 1 }}>
             <TouchableOpacity onPress={getData} style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }} >
@@ -54,13 +50,16 @@ export function ShowHomeScreenOption({ route, navigation }) {
     const logOut = () => {
         firebase.auth().signOut()
             .then(() => {
-                alert("logged Out")
                 navigation.navigate('SignIn')
+                alert("logged Out")
             })
     }
     return {
         headerTitle: 'Contact List',
         headerRight: () => (
+            <TouchableOpacity onPress={() => logOut()}>
+                <AntDesign name="logout" size={30} color="black" />
+            </TouchableOpacity>,
             <TouchableOpacity onPress={() => logOut()}>
                 <AntDesign name="logout" size={30} color="black" />
             </TouchableOpacity>

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import * as Facebook from 'expo-facebook';
 // import * as firebase from 'firebase';
+import firebase from 'firebase/compat/app';
 
 const initialState = { Email: '', Password: '' };
 
@@ -17,7 +18,6 @@ const reducer = (state, action) => {
             return state;
     }
 }
-
 export function SignInscreen({ navigation }) {
     const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -45,6 +45,7 @@ export function SignInscreen({ navigation }) {
         try {
             firebase.auth().signInWithEmailAndPassword(Email, Password).then(function (user) {
                 console.log(user);
+                navigation.navigate('Home')
             })
         }
         catch (error) {
@@ -59,6 +60,7 @@ export function SignInscreen({ navigation }) {
                 return;
             }
             firebase.auth().createUserWithEmailAndPassword(Email, Password)
+            navigation.navigate('Home')
         } catch (error) {
             console.warn(error.toString());
         }
@@ -93,14 +95,14 @@ export function SignInscreen({ navigation }) {
                 />
             </View>
             <TouchableOpacity
-                onPress={() => loginWithFacebook()} style={styles.loginBtn}>
+                onPress={() => loginWithFacebook(state.Email, state.Password)} style={styles.loginBtn}>
                 <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>Login With Facebook</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
+            <TouchableOpacity
                 onPress={() => signUpUser(state.Email, state.Password)} style={styles.loginBtn}>
                 <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>SIGN UP</Text>
-            </TouchableOpacity> */}
-            {/* <TouchableOpacity
+            </TouchableOpacity>
+            <TouchableOpacity
                 // onPress={() => {
                 //     if (!state.Email) {
                 //         Alert.alert('Email is required');
@@ -121,7 +123,7 @@ export function SignInscreen({ navigation }) {
                 // style={styles.loginBtn}
                 onPress={() => loginUser(state.Email, state.Password)} style={styles.loginBtn}>
                 <Text style={{ fontSize: 18, color: 'white', fontWeight: 'bold' }}>SIGN IN</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
         </View>
     )
 }

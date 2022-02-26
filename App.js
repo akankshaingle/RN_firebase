@@ -27,15 +27,17 @@ export default class App extends React.Component {
     }
   }
   render() {
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   console.log(user.uid);
+    // })
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          {
-            (this.state.isAuthenticated) ? <Stack.Screen name="Home" component={HomeScreen} /> : <Stack.Screen options={{ headerShown: false }} name="SignIn" component={SignInscreen} />
-          }
-          <Stack.Screen
-            options={ShowHomeScreenOption}
-            name="Home" component={HomeScreen} />
+          {/* {
+            (this.state.isAuthenticated) ? <Stack.Screen options={ShowHomeScreenOption} name="Home" component={HomeScreen} /> : <Stack.Screen options={{ headerShown: false }} name="SignIn" component={SignInscreen} />
+          } */}
+          <Stack.Screen options={{ headerShown: false }} name="SignIn" component={SignInscreen} />
+          <Stack.Screen options={ShowHomeScreenOption} name="Home" component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
 
